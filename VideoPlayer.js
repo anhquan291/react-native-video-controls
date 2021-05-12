@@ -13,6 +13,8 @@ import {
   View,
   Text,
 } from 'react-native';
+// Icon
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import padStart from 'lodash/padStart';
 
 export default class VideoPlayer extends Component {
@@ -161,7 +163,7 @@ export default class VideoPlayer extends Component {
     };
   }
 
-  componentDidUpdate = (prevProps) => {
+  componentDidUpdate = prevProps => {
     const {isFullscreen} = this.props;
 
     if (prevProps.isFullscreen !== isFullscreen) {
@@ -989,10 +991,12 @@ export default class VideoPlayer extends Component {
    */
   renderBack() {
     return this.renderControl(
-      <Image
-        source={require('./assets/img/back.png')}
-        style={styles.controls.back}
-      />,
+      // <Image
+      //   source={require('./assets/img/back.png')}
+      //   style={styles.controls.back}
+      // />
+      <MaterialIcons name="close" size={24} color="white" style={styles.controls.back}/>
+      ,
       this.events.onBack,
       styles.controls.back,
     );
@@ -1004,32 +1008,29 @@ export default class VideoPlayer extends Component {
   renderVolume() {
     return (
       <>
-        <Image
-          style={{height: 18, width: 18}}
+        {/* <Image
+          style={{height:18,width:18}}
           source={require('./assets/img/volume.png')}
-          resizeMode="contain"
+          resizeMode='contain'
+        /> */}
+        {this.state.volumePosition === 0 ? 
+        <MaterialIcons name="volume-off" size={20} color="white" /> :
+        <MaterialIcons name="volume-up" size={20} color="white" />
+        }
+      <View style={styles.volume.container}>
+        <View
+          style={[styles.volume.fill, {width: this.state.volumeFillWidth}]}
         />
-        <View style={styles.volume.container}>
-          <View
-            style={[styles.volume.fill, {width: this.state.volumeFillWidth}]}
-          />
-          <View
-            style={[styles.volume.track, {width: this.state.volumeTrackWidth}]}
-          />
-          <View
-            style={[styles.volume.handle, {left: this.state.volumePosition}]}
-            {...this.player.volumePanResponder.panHandlers}>
-            <View
-              style={{
-                height: 12,
-                width: 12,
-                borderRadius: 6,
-                backgroundColor: '#ffffff',
-                ...styles.volume.icon,
-              }}
-            />
-          </View>
+        <View
+          style={[styles.volume.track, {width: this.state.volumeTrackWidth}]}
+        />
+        <View
+          style={[styles.volume.handle, {left: this.state.volumePosition}]}
+          {...this.player.volumePanResponder.panHandlers}>
+        
+          <View style={{ height:12,width:12,borderRadius:6,backgroundColor:'#ffffff',...styles.volume.icon}}/>
         </View>
+      </View>
       </>
     );
   }
@@ -1099,7 +1100,7 @@ export default class VideoPlayer extends Component {
         {...this.player.seekPanResponder.panHandlers}>
         <View
           style={styles.seekbar.track}
-          onLayout={(event) =>
+          onLayout={event =>
             (this.player.seekerWidth = event.nativeEvent.layout.width)
           }
           pointerEvents={'none'}>
@@ -1229,7 +1230,7 @@ export default class VideoPlayer extends Component {
         <View style={[styles.player.container, this.styles.containerStyle]}>
           <Video
             {...this.props}
-            ref={(videoPlayer) => (this.player.ref = videoPlayer)}
+            ref={videoPlayer => (this.player.ref = videoPlayer)}
             resizeMode={this.state.resizeMode}
             volume={this.state.volume}
             paused={this.state.paused}
@@ -1244,31 +1245,21 @@ export default class VideoPlayer extends Component {
             style={[styles.player.video, this.styles.videoStyle]}
             source={this.props.source}
           />
-          {this.state.paused === true && (
-            <View
-              style={{
-                position: 'absolute',
-                top: '50%',
-                alignSelf: 'center',
-                transform: [{translateY: '-20%'}],
-                height: 36,
-                width: 36,
-                borderRadius: 18,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: 'rgba(0,0,0,0.5)',
-              }}>
-              <Image
-                source={require('./assets/img/play.png')}
-                style={{
-                  marginLeft: 2,
-                  height: 16,
-                  width: 16,
-                  resizeMode: 'contain',
-                }}
-              />
-            </View>
-          )}
+          { this.state.paused === true && 
+          <View style={{
+                position:'absolute',
+                top:'50%',alignSelf:'center', 
+                transform:[{translateY:'-20%'}],
+                height:36,
+                width:36,
+                borderRadius:18,
+                alignItems:'center',
+                justifyContent:'center',
+                backgroundColor:'rgba(0,0,0,0.5)'
+              }}
+          > 
+            <Image source={require('./assets/img/play.png')} style={{marginLeft:2,height:16,width:16,resizeMode:'contain'}} />
+          </View> } 
           {this.renderError()}
           {this.renderLoader()}
           {this.renderTopControls()}
@@ -1375,12 +1366,12 @@ const styles = {
       justifyContent: 'flex-end',
     },
     topControlGroup: {
-      alignSelf: 'stretch',
+      // alignSelf: 'stretch',
       alignItems: 'center',
       justifyContent: 'space-between',
       flexDirection: 'row',
-      width: null,
-      margin: 12,
+      width: '100%',
+      marginHorizontal: 5,
       marginBottom: 18,
     },
     bottomControlGroup: {
