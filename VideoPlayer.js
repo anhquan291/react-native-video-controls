@@ -161,7 +161,7 @@ export default class VideoPlayer extends Component {
     };
   }
 
-  componentDidUpdate = prevProps => {
+  componentDidUpdate = (prevProps) => {
     const {isFullscreen} = this.props;
 
     if (prevProps.isFullscreen !== isFullscreen) {
@@ -1003,22 +1003,34 @@ export default class VideoPlayer extends Component {
    */
   renderVolume() {
     return (
-      <View style={styles.volume.container}>
-        <View
-          style={[styles.volume.fill, {width: this.state.volumeFillWidth}]}
+      <>
+        <Image
+          style={{height: 18, width: 18}}
+          source={require('./assets/img/volume.png')}
+          resizeMode="contain"
         />
-        <View
-          style={[styles.volume.track, {width: this.state.volumeTrackWidth}]}
-        />
-        <View
-          style={[styles.volume.handle, {left: this.state.volumePosition}]}
-          {...this.player.volumePanResponder.panHandlers}>
-          <Image
-            style={styles.volume.icon}
-            source={require('./assets/img/volume.png')}
+        <View style={styles.volume.container}>
+          <View
+            style={[styles.volume.fill, {width: this.state.volumeFillWidth}]}
           />
+          <View
+            style={[styles.volume.track, {width: this.state.volumeTrackWidth}]}
+          />
+          <View
+            style={[styles.volume.handle, {left: this.state.volumePosition}]}
+            {...this.player.volumePanResponder.panHandlers}>
+            <View
+              style={{
+                height: 12,
+                width: 12,
+                borderRadius: 6,
+                backgroundColor: '#ffffff',
+                ...styles.volume.icon,
+              }}
+            />
+          </View>
         </View>
-      </View>
+      </>
     );
   }
 
@@ -1087,7 +1099,7 @@ export default class VideoPlayer extends Component {
         {...this.player.seekPanResponder.panHandlers}>
         <View
           style={styles.seekbar.track}
-          onLayout={event =>
+          onLayout={(event) =>
             (this.player.seekerWidth = event.nativeEvent.layout.width)
           }
           pointerEvents={'none'}>
@@ -1217,7 +1229,7 @@ export default class VideoPlayer extends Component {
         <View style={[styles.player.container, this.styles.containerStyle]}>
           <Video
             {...this.props}
-            ref={videoPlayer => (this.player.ref = videoPlayer)}
+            ref={(videoPlayer) => (this.player.ref = videoPlayer)}
             resizeMode={this.state.resizeMode}
             volume={this.state.volume}
             paused={this.state.paused}
@@ -1232,6 +1244,31 @@ export default class VideoPlayer extends Component {
             style={[styles.player.video, this.styles.videoStyle]}
             source={this.props.source}
           />
+          {this.state.paused === true && (
+            <View
+              style={{
+                position: 'absolute',
+                top: '50%',
+                alignSelf: 'center',
+                transform: [{translateY: '-20%'}],
+                height: 36,
+                width: 36,
+                borderRadius: 18,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'rgba(0,0,0,0.5)',
+              }}>
+              <Image
+                source={require('./assets/img/play.png')}
+                style={{
+                  marginLeft: 2,
+                  height: 16,
+                  width: 16,
+                  resizeMode: 'contain',
+                }}
+              />
+            </View>
+          )}
           {this.renderError()}
           {this.renderLoader()}
           {this.renderTopControls()}
@@ -1390,7 +1427,7 @@ const styles = {
       justifyContent: 'flex-start',
       flexDirection: 'row',
       height: 1,
-      marginLeft: 20,
+      marginLeft: 5,
       marginRight: 20,
       width: 150,
     },
