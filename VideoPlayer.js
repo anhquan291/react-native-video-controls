@@ -1417,19 +1417,19 @@ const styles = {
       alignItems: 'center',
       justifyContent: 'flex-start',
       flexDirection: 'row',
-      height: 1,
+      height: 2,
       marginLeft: 5,
       marginRight: 20,
       width: 150,
     },
     track: {
       backgroundColor: '#333',
-      height: 1,
+      height: 2,
       marginLeft: 7,
     },
     fill: {
       backgroundColor: '#FFF',
-      height: 1,
+      height: 2,
     },
     handle: {
       position: 'absolute',
@@ -1450,14 +1450,14 @@ const styles = {
     },
     track: {
       backgroundColor: '#333',
-      height: 1,
+      height: 2,
       position: 'relative',
       top: 14,
       width: '100%',
     },
     fill: {
       backgroundColor: '#FFF',
-      height: 1,
+      height: 2,
       width: '100%',
     },
     handle: {
@@ -1469,8 +1469,8 @@ const styles = {
     circle: {
       borderRadius: 12,
       position: 'relative',
-      top: 8,
-      left: 8,
+      top: 9,
+      left: 7,
       height: 12,
       width: 12,
     },
